@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Harry Potter i Kamień Filozoficzny. Tom 1",
+        "imageUrl": "https://picsum.photos/id/237/200/300",
+        "wanted": "Fantasy",
+        "timestamp": "2016-01-04 10:34:23"
+    },
+    {
+        "title": "Kicia Kocia i Nunuś. Idą święta!",
+        "imageUrl": "https://picsum.photos/id/237/200/300",
+        "wanted": "Sci-fi",
+        "timestamp": "2020-10-12 18:45:32"
+    },
+    {
+        "title": "Nasz ostatni dzień",
+        "imageUrl": "https://picsum.photos/id/237/200/300",
+        "wanted": "Criminal",
+        "timestamp": "2021-08-02 09:22:11"
+    },
+    {
+        "title": "Pieśń o Achillesie",
+        "imageUrl": "https://picsum.photos/id/237/200/300",
+        "wanted": "Fiction",
+        "timestamp": "2018-02-22 07:01:45"
+    }
+]

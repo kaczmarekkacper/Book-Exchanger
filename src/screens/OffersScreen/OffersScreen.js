@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { SearchBar } from "react-native-elements";
 
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
@@ -19,22 +19,36 @@ const OffersScreen = (props) => {
         onChangeText={setSearch}
         value={search}
       ></SearchBar>
-      {data.map((el) => {
-        return (
-          <OfferElement
-            title={el.title}
-            imageUrl={el.imageUrl}
-            wanted={el.wanted}
-            timestamp={Moment(el.timestamp).format("llll")}
-          ></OfferElement>
-        );
-      })}
+      <View style={style.scrollViewContainter}>
+        <ScrollView contentContainerStyle={style.scrollableContent}>
+          {data.map((el) => {
+            return (
+              <OfferElement
+                title={el.title}
+                imageUrl={el.imageUrl}
+                wanted={el.wanted}
+                timestamp={Moment(el.timestamp).format("llll")}
+              ></OfferElement>
+            );
+          })}
+        </ScrollView>
+      </View>
     </LayoutWithControlBar>
   );
 };
 
 const style = StyleSheet.create({
   searchBar: {
+    width: "100%",
+  },
+  scrollableContent: {
+    width: "100%",
+    height: "100%",
+    flexShrink: 1,
+  },
+  scrollViewContainter: {
+    flexDirection: "column",
+    height: "85%",
     width: "100%",
   },
 });

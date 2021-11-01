@@ -33,8 +33,8 @@ const ControlBar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexShrink: 1,
     flexDirection: "row", // horizontal
-    justifyContent: "space-around", // main
     alignItems: "flex-end", // secondary
     width: "100%",
   },

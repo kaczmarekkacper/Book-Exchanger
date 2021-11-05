@@ -24,6 +24,7 @@ const OffersScreen = (props) => {
           {data.map((el) => {
             return (
               <OfferElement
+                key={Math.random()}
                 title={el.title}
                 imageUrl={el.imageUrl}
                 wanted={el.wanted}

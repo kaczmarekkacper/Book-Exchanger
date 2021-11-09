@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, View, FlatList } from "react-native";
 import { SearchBar } from "react-native-elements";
 
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 import OfferElement from "../../components/OfferElement";
-
-import Moment from "moment";
 
 import data from "./mockElements.json";
 
@@ -13,24 +11,13 @@ const OffersScreen = (props) => {
   const [search, setSearch] = useState("");
   return (
     <LayoutWithControlBar>
-      <SearchBar
-        containerStyle={style.searchBar}
-        placeholder="Type here"
-        onChangeText={setSearch}
-        value={search}
-      ></SearchBar>
       <View style={style.scrollViewContainter}>
         <ScrollView contentContainerStyle={style.scrollableContent}>
-          {data.map((el) => {
-            return (
-              <OfferElement
-                title={el.title}
-                imageUrl={el.imageUrl}
-                wanted={el.wanted}
-                timestamp={Moment(el.timestamp).format("llll")}
-              ></OfferElement>
-            );
-          })}
+          <FlatList
+            data={data}
+            renderItem={OfferElement}
+            keyExtractor={(item) => item.id}
+          />
         </ScrollView>
       </View>
     </LayoutWithControlBar>
@@ -38,9 +25,6 @@ const OffersScreen = (props) => {
 };
 
 const style = StyleSheet.create({
-  searchBar: {
-    width: "100%",
-  },
   scrollableContent: {
     width: "100%",
     height: "100%",

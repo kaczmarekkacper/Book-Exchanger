@@ -12,13 +12,11 @@ const OffersScreen = (props) => {
   return (
     <LayoutWithControlBar>
       <View style={style.scrollViewContainter}>
-        <ScrollView contentContainerStyle={style.scrollableContent}>
-          <FlatList
-            data={data}
-            renderItem={OfferElement}
-            keyExtractor={(item) => item.id}
-          />
-        </ScrollView>
+        <FlatList
+          data={data}
+          renderItem={OfferElement}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </LayoutWithControlBar>
   );

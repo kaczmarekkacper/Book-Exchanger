@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import ScannerScreen from "./src/screens/ScannerScreen/ScannerScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const App = () => {
         />
         <Stack.Screen name="OffersScreen" component={OffersScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="ScannerScreen" component={ScannerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     //    <SafeAreaView style={styles.container}>

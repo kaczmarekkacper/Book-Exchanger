@@ -1,23 +1,28 @@
 import React from "react";
 
+import Moment from "moment";
+
 import { StyleSheet, View, Text, Image } from "react-native";
 
 const OfferElement = (props) => {
+  console.log(props);
   return (
     <View style={style.container}>
       <Image
         style={style.image}
         source={{
-          uri: props.imageUrl,
+          uri: props.item.imageUrl,
           width: 200,
           height: 300,
         }}
       ></Image>
       <View style={style.textContainer}>
-        <Text style={style.title}>{props.title}</Text>
-        <Text style={style.wanted}>{`For: ${props.wanted}`}</Text>
+        <Text style={style.title}>{props.item.title}</Text>
+        <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
         <View style={style.timestampView}>
-          <Text style={style.timestamp}>{props.timestamp}</Text>
+          <Text style={style.timestamp}>
+            {Moment(props.item.timestamp).format("llll")}
+          </Text>
         </View>
       </View>
     </View>
@@ -28,7 +33,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "20%",
+    height: "60%",
     flexDirection: "row",
     backgroundColor: "lightgrey",
   },

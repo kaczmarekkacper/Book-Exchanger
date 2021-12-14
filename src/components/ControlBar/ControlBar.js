@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import ControlBarIcon from "../ControlBarIcon";
 import Icon from "react-native-vector-icons/AntDesign";
 
-const ControlBar = () => {
+const ControlBar = (props) => {
   return (
-    <View style={styles.container}>
+    <View style={props.containerStyle}>
       <ControlBarIcon
         title="Search"
         icon={<Icon name="home" color="white" />}
@@ -29,16 +29,5 @@ const ControlBar = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexShrink: 1,
-    flexDirection: "row", // horizontal
-    alignItems: "flex-end", // secondary
-    width: "100%",
-  },
-  icon: {},
-});
 
 export default ControlBar;

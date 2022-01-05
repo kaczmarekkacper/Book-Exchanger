@@ -7,6 +7,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import ScannerScreen from "./src/screens/ScannerScreen/ScannerScreen";
+import ChatScreen from "./src/screens/ChatScreen/ChatScreen";
+
+///
+import { LogBox } from "react-native";
+import _ from "lodash";
+
+LogBox.ignoreLogs(["Warning:..."]); // ignore specific logs
+LogBox.ignoreAllLogs(); // ignore all logs
+const _console = _.clone(console);
+console.warn = (message) => {
+  if (message.indexOf("Setting a timer") <= -1) {
+    _console.warn(message);
+  }
+};
+///
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +37,7 @@ const App = () => {
         <Stack.Screen name="OffersScreen" component={OffersScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ScannerScreen" component={ScannerScreen} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     //    <SafeAreaView style={styles.container}>
@@ -40,4 +56,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-

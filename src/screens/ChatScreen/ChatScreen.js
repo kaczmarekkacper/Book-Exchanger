@@ -17,11 +17,16 @@ import { signOut } from "firebase/auth";
 
 import { auth, database } from "../../../firebase";
 
-export default function Chat({ navigation }) {
+const ChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
 
   const onSignOut = () => {
-    signOut(auth).catch((error) => console.log("Error logging out: ", error));
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("LoginScreen");
+      })
+      .catch((error) => alert(error.message));
   };
 
   useLayoutEffect(() => {
@@ -44,7 +49,7 @@ export default function Chat({ navigation }) {
 
   // }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const collectionRef = collection(database, "chats");
     const q = query(collectionRef, orderBy("createdAt", "desc"));
 
@@ -57,10 +62,11 @@ export default function Chat({ navigation }) {
           user: doc.data().user,
         }))
       );
+      console.log("Updated");
     });
 
     return unsubscribe;
-  });
+  }, []);
 
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
@@ -86,4 +92,5 @@ export default function Chat({ navigation }) {
       }}
     />
   );
-}
+};
+export default ChatScreen;

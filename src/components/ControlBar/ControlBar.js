@@ -3,6 +3,7 @@ import { View } from "react-native";
 import ControlBarIcon from "../ControlBarIcon";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../../firebase";
 
 const ControlBar = (props) => {
   const navigation = useNavigation();
@@ -11,6 +12,14 @@ const ControlBar = (props) => {
   };
   const handleSearch = () => {
     navigation.navigate("OffersScreen");
+  };
+  const handleLogOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("LoginScreen");
+      })
+      .catch((error) => alert(error.message));
   };
   return (
     <View style={props.containerStyle}>
@@ -36,6 +45,11 @@ const ControlBar = (props) => {
       <ControlBarIcon
         title="Account"
         icon={<Icon name="team" color="white" />}
+      />
+      <ControlBarIcon
+        title="Logout"
+        icon={<Icon name="logout" color="white" />}
+        onPress={handleLogOut}
       />
     </View>
   );

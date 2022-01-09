@@ -7,6 +7,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import ScannerScreen from "./src/screens/ScannerScreen";
 import AddOfferScreen from "./src/screens/AddOfferScreen";
+import OfferDetailsScreen from "./src/screens/OfferDetailsScreen";
 
 ///
 import { LogBox } from "react-native";
@@ -36,7 +37,7 @@ const App = () => {
         <Stack.Screen
           name="OffersScreen"
           component={OffersScreen}
-          options={{ title: "Ksiązki do odbioru" }}
+          options={{ title: "Ogłoszenia" }}
         />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen
@@ -49,6 +50,13 @@ const App = () => {
           component={AddOfferScreen}
           options={{
             title: "Dodaj ogłoszenie",
+          }}
+        />
+        <Stack.Screen
+          name="OfferDetailsScreen"
+          component={OfferDetailsScreen}
+          options={{
+            title: "Szczegóły ogłoszenia",
           }}
         />
       </Stack.Navigator>

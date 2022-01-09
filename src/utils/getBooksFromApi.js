@@ -1,9 +1,10 @@
 const getBooksFromApi = async (barcode) => {
+  let json = undefined;
   try {
     const response = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=isbn:${barcode}`
     );
-    const json = await response.json();
+    json = await response.json();
   } catch (error) {
     console.error(error);
   }

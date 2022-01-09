@@ -1,14 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
-import OfferElement from "../../components/OfferElement";
+import {
+  OfferElement,
+  ActualOfferElement,
+} from "../../components/OfferElement";
 import { SearchBar } from "react-native-elements";
+import {
+  collection,
+  addDoc,
+  orderBy,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
+import { database } from "../../../firebase";
 
 import data from "./mockElements.json";
 
 const OffersScreen = () => {
   const [search, setSearch] = useState("");
+  const [offers, setOffers] = useState([]);
+
+  useEffect(() => {
+    const collectionRef = collection(database, "test_offers");
+    const q = query(collectionRef, orderBy("timestamp", "desc"));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setOffers(
+        querySnapshot.docs.map((doc) => ({
+          title: doc.data().title,
+          id: doc.id,
+          user: doc.data().user,
+          author: doc.data().author,
+          timestamp: doc.data().timestamp.toDate(),
+          imageUrl: doc.data().imageUrl,
+        }))
+      );
+      console.log("Updated");
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <LayoutWithControlBar>
       <SearchBar
@@ -19,8 +53,8 @@ const OffersScreen = () => {
       ></SearchBar>
       <View style={style.scrollViewContainter}>
         <FlatList
-          data={data}
-          renderItem={OfferElement}
+          data={offers}
+          renderItem={ActualOfferElement}
           keyExtractor={(item) => item.id}
         />
       </View>
@@ -46,4 +80,3 @@ const style = StyleSheet.create({
 });
 
 export default OffersScreen;
-

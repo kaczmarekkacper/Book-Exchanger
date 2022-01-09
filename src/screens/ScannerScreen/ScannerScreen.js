@@ -21,6 +21,10 @@ const ScannerScreen = (props) => {
   const handledBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data);
+    console.log("Type: " + type + "\nData: " + data);
+  };
+
+  const returnData = () => {
     let setBarcode =
       !!props &&
       !!props.route &&
@@ -28,8 +32,8 @@ const ScannerScreen = (props) => {
       !!props.route.params.setBarcode
         ? props.route.params.setBarcode
         : undefined;
-    if (!!setBarcode) setBarcode(data);
-    console.log("Type: " + type + "\nData: " + data);
+    if (!!setBarcode) setBarcode(text);
+    setScanned(false);
     props.navigation.goBack();
   };
 
@@ -39,6 +43,20 @@ const ScannerScreen = (props) => {
         onBarCodeScanned={scanned ? undefined : handledBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       ></BarCodeScanner>
+      <Text style={styles.scannedText}>{text}</Text>
+      {scanned && (
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setScanned(false)}
+          >
+            <Text style={styles.buttonText}>Rescan</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={returnData}>
+            <Text style={styles.buttonText}>Return data</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   ) : (
     <View style={styles.container}>

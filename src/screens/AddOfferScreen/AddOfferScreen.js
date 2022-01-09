@@ -48,20 +48,22 @@ const AddOfferScreen = (props) => {
   }, [navigation]);
 
   const uploadOffer = () => {
-    const bookData = {
+    const offerData = {
       title: offerTitle,
       description: offerDesc,
       location: region,
       isbn: barcode,
       user: auth.currentUser?.email,
     };
-    console.log(bookData);
-    setDoc(doc(db, "offers", id), bookData);
+    console.log("Offer data: " + JSON.stringify(offerData));
+    console.log("Book data: " + JSON.stringify(bookData));
+    setDoc(doc(db, "offers", id), offerData);
   };
 
   useEffect(() => {
     if (!!barcode) {
       data = getBooksFromApi(barcode);
+      console.log("Data: " + JSON.stringify(data));
       setBookData(data);
     }
   }, [barcode]);

@@ -2,7 +2,13 @@ import React from "react";
 
 import Moment from "moment";
 
-import { StyleSheet, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+} from "react-native";
 
 const OfferElement = (props) => {
   console.log(props);
@@ -26,6 +32,38 @@ const OfferElement = (props) => {
         </View>
       </View>
     </View>
+  );
+};
+
+const ActualOfferElement = (props) => {
+  console.log(props);
+  return (
+    <TouchableHighlight
+      onPress={() => {
+        console.log("PRESSED");
+      }}
+    >
+      <View style={style.container}>
+        <Image
+          style={style.image}
+          source={{
+            uri: props.item.imageUrl,
+            width: 200,
+            height: 300,
+          }}
+        ></Image>
+        <View style={style.textContainer}>
+          <Text style={style.title}>{props.item.title}</Text>
+          <Text style={style.title}>{props.item.author}</Text>
+          <Text style={style.wanted}>{`ISBN: ${props.item.isbn}`}</Text>
+          <View style={style.timestampView}>
+            <Text style={style.timestamp}>
+              {Moment(props.item.timestamp).format("llll")}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </TouchableHighlight>
   );
 };
 
@@ -66,4 +104,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default OfferElement;
+export { OfferElement, ActualOfferElement };

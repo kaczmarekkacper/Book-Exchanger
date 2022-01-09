@@ -8,6 +8,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import ScannerScreen from "./src/screens/ScannerScreen";
 import AddOfferScreen from "./src/screens/AddOfferScreen";
 import OfferDetailsScreen from "./src/screens/OfferDetailsScreen";
+import ChatScreen from "./src/screens/ChatScreen/ChatScreen";
 
 ///
 import { LogBox } from "react-native";
@@ -57,6 +58,13 @@ const App = () => {
           component={OfferDetailsScreen}
           options={{
             title: "Szczegóły ogłoszenia",
+          }}
+        />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{
+            title: "Chat Prywatny",
           }}
         />
       </Stack.Navigator>

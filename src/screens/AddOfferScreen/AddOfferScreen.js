@@ -19,6 +19,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import BookInfo from "../../components/BookInfo";
 
 import getBooksFromApi from "../../utils/getBooksFromApi";
+import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 
 const AddOfferScreen = (props) => {
   const db = getFirestore();
@@ -73,42 +74,46 @@ const AddOfferScreen = (props) => {
   };
 
   return (
-    <ScrollView>
-      <>
-        <Text style={styles.addOfferText}>Dodawanie ogłoszenia</Text>
-        <TouchableOpacity style={styles.button} onPress={handleScanner}>
-          <Icon name="barcode" color="white" />
-        </TouchableOpacity>
-      </>
-      <UploadPhotoElement />
-      <InputWithTitle
-        title="Tytuł"
-        onChangeText={setOfferTitle}
-        value={offerTitle}
-        placeholder="Tytuł ogłoszenia"
-        keyboardType="text"
-        multiline={true}
-      />
-      <InputWithTitle
-        title="Opis"
-        onChangeText={setOfferDesc}
-        value={offerDesc}
-        placeholder="Opis ogłoszenia"
-        keyboardType="text"
-        multiline={true}
-      />
-      <Text style={styles.addOfferText}>{!!barcode ? barcode : "nie ma"}</Text>
-      <Text style={styles.addOfferText}>Lokalizacja</Text>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        region={region}
-        style={styles.map}
-        // onRegionChange={setRegion}
-      >
-        <Marker coordinate={markerCorr} />
-      </MapView>
-      {!!bookData ? <BookInfo {...bookData} /> : null}
-    </ScrollView>
+    <LayoutWithControlBar>
+      <ScrollView>
+        <>
+          <Text style={styles.addOfferText}>Dodawanie ogłoszenia</Text>
+          <TouchableOpacity style={styles.button} onPress={handleScanner}>
+            <Icon name="barcode" color="white" />
+          </TouchableOpacity>
+        </>
+        <UploadPhotoElement />
+        <InputWithTitle
+          title="Tytuł"
+          onChangeText={setOfferTitle}
+          value={offerTitle}
+          placeholder="Tytuł ogłoszenia"
+          keyboardType="text"
+          multiline={true}
+        />
+        <InputWithTitle
+          title="Opis"
+          onChangeText={setOfferDesc}
+          value={offerDesc}
+          placeholder="Opis ogłoszenia"
+          keyboardType="text"
+          multiline={true}
+        />
+        <Text style={styles.addOfferText}>
+          {!!barcode ? barcode : "nie ma"}
+        </Text>
+        <Text style={styles.addOfferText}>Lokalizacja</Text>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          region={region}
+          style={styles.map}
+          // onRegionChange={setRegion}
+        >
+          <Marker coordinate={markerCorr} />
+        </MapView>
+        {!!bookData ? <BookInfo {...bookData} /> : null}
+      </ScrollView>
+    </LayoutWithControlBar>
   );
 };
 

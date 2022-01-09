@@ -1,29 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { auth } from "../../../firebase";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 
 const OfferDetailsScreen = (props) => {
   const item = props.route.params.item;
+  const navigation = useNavigation();
 
   const handledOpenChat = () => {
     console.log("Opening chat with user " + item.user);
+    navigation.navigate("ChatScreen", { to_user: item.user });
   };
   return (
-    <View style={styles.container}>
-      <Text>{`Autor: ${item.author}`}</Text>
-      <Text>{`Tytuł: ${item.title}`}</Text>
-      <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
-        <Text style={styles.buttonText}>Otwórz czat</Text>
-      </TouchableOpacity>
-    </View>
+    <LayoutWithControlBar>
+      <View style={styles.container}>
+        <Text>{`Autor: ${item.author}`}</Text>
+        <Text>{`Tytuł: ${item.title}`}</Text>
+        <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
+          <Text style={styles.buttonText}>Otwórz czat</Text>
+        </TouchableOpacity>
+      </View>
+    </LayoutWithControlBar>
   );
 };
 

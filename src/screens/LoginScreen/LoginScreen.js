@@ -21,33 +21,33 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.replace("OffersScreen");
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.replace("OffersScreen");
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   const handleRegister = () => {
     console.log("register");
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredentials) => {
-    //     const user = userCredentials.user;
-    //     console.log("Registered with: ", user.email);
-    //   })
-    //   .catch((error) => alert(error.message));
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Registered with: ", user.email);
+      })
+      .catch((error) => alert(error.message));
   };
 
   const handleLogin = () => {
     console.log("login");
-    // signInWithEmailAndPassword(auth, email, password)
-    //   .then((userCredentials) => {
-    //     const user = userCredentials.user;
-    //     console.log("Logged in with: ", user.email);
-    //   })
-    //   .catch((error) => alert(error.message));
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logged in with: ", user.email);
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (

@@ -1,12 +1,26 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import OffersScreen from "./src/screens/OffersScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
-import ScannerScreen from "./src/screens/ScannerScreen/ScannerScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import ScannerScreen from "./src/screens/ScannerScreen";
+import AddOfferScreen from "./src/screens/AddOfferScreen";
+
+///
+import { LogBox } from "react-native";
+import _ from "lodash";
+
+LogBox.ignoreLogs(["Warning:..."]); // ignore specific logs
+LogBox.ignoreAllLogs(); // ignore all logs
+const _console = _.clone(console);
+console.warn = (message) => {
+  if (message.indexOf("Setting a timer") <= -1) {
+    _console.warn(message);
+  }
+};
+///
 
 const Stack = createNativeStackNavigator();
 
@@ -19,15 +33,26 @@ const App = () => {
           name="LoginScreen"
           component={LoginScreen}
         />
-        <Stack.Screen name="OffersScreen" component={OffersScreen} />
+        <Stack.Screen
+          name="OffersScreen"
+          component={OffersScreen}
+          options={{ title: "Ksiązki do odbioru" }}
+        />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="ScannerScreen" component={ScannerScreen} />
+        <Stack.Screen
+          name="ScannerScreen"
+          component={ScannerScreen}
+          options={{ title: "Zeskanuj kod kreskowy" }}
+        />
+        <Stack.Screen
+          name="AddOfferScreen"
+          component={AddOfferScreen}
+          options={{
+            title: "Dodaj ogłoszenie",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    //    <SafeAreaView style={styles.container}>
-    //      <StatusBar style="auto" />
-    //      <OffersScreen></OffersScreen>
-    //    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -40,4 +65,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-

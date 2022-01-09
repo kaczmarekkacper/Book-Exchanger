@@ -10,7 +10,7 @@ const InputWithTitle = (props) => {
         onChangeText={props.onChangeText}
         value={props.value}
         placeholder={props.placeholder}
-        keyboardType={props.keyboardType}
+        // keyboardType={props.keyboardType}
         multiline={props.multiline}
       />
     </View>

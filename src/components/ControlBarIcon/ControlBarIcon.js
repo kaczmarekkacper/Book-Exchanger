@@ -10,6 +10,7 @@ const ControlBarIcon = (props) => {
         icon={props.icon}
         iconPosition="top"
         title={props.title}
+        onPress={props.onPress}
       />
     </View>
   );

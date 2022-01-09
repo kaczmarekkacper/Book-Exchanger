@@ -9,6 +9,11 @@ import {
   View,
 } from "react-native";
 import { auth } from "../../../firebase";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -16,33 +21,33 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace("HomeScreen");
-      }
-    });
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       navigation.replace("OffersScreen");
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, []);
 
   const handleRegister = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with: ", user.email);
-      })
-      .catch((error) => alert(error.message));
+    console.log("register");
+    // createUserWithEmailAndPassword(auth, email, password)
+    //   .then((userCredentials) => {
+    //     const user = userCredentials.user;
+    //     console.log("Registered with: ", user.email);
+    //   })
+    //   .catch((error) => alert(error.message));
   };
 
   const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with: ", user.email);
-      })
-      .catch((error) => alert(error.message));
+    console.log("login");
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredentials) => {
+    //     const user = userCredentials.user;
+    //     console.log("Logged in with: ", user.email);
+    //   })
+    //   .catch((error) => alert(error.message));
   };
 
   return (
@@ -59,7 +64,7 @@ const LoginScreen = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
-          secureTextEntry
+          secureTextEntry={true}
         />
       </View>
 

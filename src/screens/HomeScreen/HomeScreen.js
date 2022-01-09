@@ -19,6 +19,9 @@ const HomeScreen = () => {
   const handleScanner = () => {
     navigation.navigate("ScannerScreen");
   };
+  const handleAddOffer = () => {
+    navigation.navigate("AddOfferScreen");
+  };
   return (
     <View style={styles.container}>
       <Text>Email: {auth.currentUser?.email}</Text>
@@ -30,6 +33,9 @@ const HomeScreen = () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleScanner}>
         <Text style={styles.buttonText}>Scanner</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleAddOffer}>
+        <Text style={styles.buttonText}>AddOffer</Text>
       </TouchableOpacity>
     </View>
   );

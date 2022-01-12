@@ -13,6 +13,9 @@ const ControlBar = (props) => {
   const handleSearch = () => {
     navigation.navigate("OffersScreen");
   };
+  const handleChats = () => {
+    navigation.navigate("UserChatsScreen");
+  };
   const handleLogOut = () => {
     auth
       .signOut()
@@ -41,6 +44,7 @@ const ControlBar = (props) => {
       <ControlBarIcon
         title="Chats"
         icon={<Icon name="message1" color="white" />}
+        onPress={handleChats}
       />
       <ControlBarIcon
         title="Account"

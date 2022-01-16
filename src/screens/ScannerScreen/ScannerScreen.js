@@ -33,8 +33,7 @@ const ScannerScreen = (props) => {
         ? props.route.params.setBarcode
         : undefined;
     if (!!setBarcode) setBarcode(text);
-    setScanned(false);
-    props.navigation.goBack();
+    props.navigation.goBack(null);
   };
 
   return !!hasPermission ? (

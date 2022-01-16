@@ -26,6 +26,7 @@ const AddOfferScreen = (props) => {
   const navigation = useNavigation();
   const [id] = useState(uuid.v1());
   const [offerTitle, setOfferTitle] = useState("");
+  const [offerAuthors, setOfferAuthors] = useState("");
   const [offerDesc, setOfferDesc] = useState("");
   const [barcode, setBarcode] = useState("");
   const [region, setRegion] = useState({
@@ -40,7 +41,6 @@ const AddOfferScreen = (props) => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
-  const [bookData, setBookData] = useState({});
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,27 +49,43 @@ const AddOfferScreen = (props) => {
   }, [navigation]);
 
   const uploadOffer = () => {
+    console.log("Uploading");
     const offerData = {
       title: offerTitle,
+      authors: offerAuthors,
       description: offerDesc,
       location: region,
       isbn: barcode,
       user: auth.currentUser?.email,
     };
     console.log("Offer data: " + JSON.stringify(offerData));
-    console.log("Book data: " + JSON.stringify(bookData));
     setDoc(doc(db, "offers", id), offerData);
+    navigation.navigate("OffersScreen");
   };
 
   useEffect(() => {
     if (!!barcode) {
-      data = getBooksFromApi(barcode);
-      console.log("Data: " + JSON.stringify(data));
-      setBookData(data);
+      console.log(barcode);
+      getBooksFromApi(barcode).then((d) => {
+        console.log(d);
+        try {
+          setOfferTitle(d["volumeInfo"]["title"]);
+        } catch (e) {
+          console.log(e);
+        }
+        try {
+          setOfferAuthors(
+            d["volumeInfo"]["authors"].map((item) => item).join(", ")
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      });
     }
   }, [barcode]);
 
   const handleScanner = () => {
+    setBarcode("");
     navigation.navigate("ScannerScreen", { setBarcode: setBarcode });
   };
 
@@ -92,6 +108,14 @@ const AddOfferScreen = (props) => {
           multiline={true}
         />
         <InputWithTitle
+          title="Autorzy"
+          onChangeText={setOfferAuthors}
+          value={offerAuthors}
+          placeholder="Autorzy"
+          keyboardType="text"
+          multiline={false}
+        />
+        <InputWithTitle
           title="Opis"
           onChangeText={setOfferDesc}
           value={offerDesc}
@@ -99,9 +123,14 @@ const AddOfferScreen = (props) => {
           keyboardType="text"
           multiline={true}
         />
-        <Text style={styles.addOfferText}>
-          {!!barcode ? barcode : "nie ma"}
-        </Text>
+        <InputWithTitle
+          title="ISBN"
+          onChangeText={setBarcode}
+          value={!!barcode ? barcode : "nie ma"}
+          placeholder="Numer ISBN"
+          keyboardType="text"
+          multiline={false}
+        />
         <Text style={styles.addOfferText}>Lokalizacja</Text>
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -111,7 +140,6 @@ const AddOfferScreen = (props) => {
         >
           <Marker coordinate={markerCorr} />
         </MapView>
-        {!!bookData ? <BookInfo {...bookData} /> : null}
       </ScrollView>
     </LayoutWithControlBar>
   );

@@ -24,7 +24,9 @@ const style = StyleSheet.create({
   title: {
     fontSize: 15,
   },
-  input: {},
+  input: {
+    backgroundColor: "grey",
+  },
 });
 
 export default InputWithTitle;

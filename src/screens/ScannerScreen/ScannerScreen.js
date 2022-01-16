@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { Camera } from "expo-camera";
 
 const ScannerScreen = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -9,7 +10,7 @@ const ScannerScreen = (props) => {
 
   const askForCameraPermission = () => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status == "granted");
     })();
   };
@@ -35,14 +36,14 @@ const ScannerScreen = (props) => {
     if (!!setBarcode) setBarcode(text);
     props.navigation.goBack(null);
   };
-
   return !!hasPermission ? (
     <View style={styles.container}>
-      <BarCodeScanner
+      <Camera
+        style={styles.camera}
+        type={Camera.Constants.Type.back}
         onBarCodeScanned={scanned ? undefined : handledBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      ></BarCodeScanner>
-      <Text style={styles.scannedText}>{text}</Text>
+      ></Camera>
+      <Text style={styles.scannedText}>{scanned ? text : "Scanning"}</Text>
       {scanned && (
         <View style={styles.container}>
           <TouchableOpacity
@@ -75,6 +76,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  camera: {
+    flex: 0,
+    width: "60%",
+    height: "40%",
+  },
   button: {
     backgroundColor: "green",
     width: "60%",
@@ -98,6 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     alignItems: "center",
     fontSize: 25,
+    textAlign: "center",
   },
   barcodeBox: {
     alignItems: "center",

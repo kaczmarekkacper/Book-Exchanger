@@ -43,10 +43,6 @@ const FavouriteScreen = (props) => {
     return unsubscribe;
   }, []);
 
-  console.log(ids);
-  console.log(offers);
-  console.log(ids.includes("7d02ef21-77ab-11ec-8fc5-bf22ba64282b"));
-
   return (
     <LayoutWithControlBar>
       <SearchBar

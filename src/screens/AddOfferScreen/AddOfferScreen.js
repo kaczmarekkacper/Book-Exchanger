@@ -15,10 +15,11 @@ import uuid from "react-native-uuid";
 import UploadPhotoElement from "../../components/UploadPhotoElement";
 import InputWithTitle from "../../components/InputWithTitle";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import BookInfo from "../../components/BookInfo";
 
 import getBooksFromApi from "../../utils/getBooksFromApi";
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
+
+import * as Location from "expo-location";
 
 const AddOfferScreen = (props) => {
   const db = getFirestore();
@@ -29,12 +30,6 @@ const AddOfferScreen = (props) => {
   const [offerDesc, setOfferDesc] = useState("");
   const [barcode, setBarcode] = useState("");
   const [region, setRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
-  const [markerCorr, setMarkerCorr] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
     latitudeDelta: 0.0922,
@@ -62,6 +57,24 @@ const AddOfferScreen = (props) => {
     setDoc(doc(db, "offers", id), offerData);
     navigation.navigate("OffersScreen");
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.01,
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     if (!!barcode) {
@@ -141,10 +154,10 @@ const AddOfferScreen = (props) => {
           provider={PROVIDER_GOOGLE}
           region={region}
           style={styles.map}
+          showsUserLocation={true}
+          followsUserLocation={true}
           // onRegionChange={setRegion}
-        >
-          <Marker coordinate={markerCorr} />
-        </MapView>
+        ></MapView>
       </ScrollView>
     </LayoutWithControlBar>
   );

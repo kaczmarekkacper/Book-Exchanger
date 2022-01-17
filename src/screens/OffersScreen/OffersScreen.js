@@ -1,30 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  TouchableHighlight,
-  Image,
-  Text,
-} from "react-native";
-import Moment from "moment";
+import { StyleSheet, View, FlatList } from "react-native";
 
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
-import {
-  OfferElement,
-  ActualOfferElement,
-} from "../../components/OfferElement";
+import OfferElement from "../../components/OfferElement";
 import { SearchBar } from "react-native-elements";
-import {
-  collection,
-  addDoc,
-  orderBy,
-  query,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, orderBy, query, onSnapshot } from "firebase/firestore";
 import { database } from "../../../firebase";
-
-import { useNavigation } from "@react-navigation/native";
 
 const OffersScreen = () => {
   const [search, setSearch] = useState("");
@@ -51,8 +32,6 @@ const OffersScreen = () => {
     return unsubscribe;
   }, []);
 
-  const navigation = useNavigation();
-
   return (
     <LayoutWithControlBar>
       <SearchBar
@@ -65,38 +44,7 @@ const OffersScreen = () => {
         <FlatList
           data={offers}
           renderItem={(props) => {
-            return (
-              <TouchableHighlight
-                onPress={() => {
-                  console.log("PRESSED");
-                  navigation.navigate("OfferDetailsScreen", {
-                    item: props.item,
-                  });
-                }}
-              >
-                <View style={style.container}>
-                  <Image
-                    style={style.image}
-                    source={{
-                      uri: props.item.imageUrl,
-                      width: 200,
-                      height: 300,
-                    }}
-                  ></Image>
-                  <View style={style.textContainer}>
-                    <Text style={style.title}>{props.item.title}</Text>
-                    <Text
-                      style={style.wanted}
-                    >{`For: ${props.item.wanted}`}</Text>
-                    <View style={style.timestampView}>
-                      <Text style={style.timestamp}>
-                        {Moment(props.item.timestamp).format("llll")}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </TouchableHighlight>
-            );
+            return <OfferElement {...props} />;
           }}
           keyExtractor={(item) => item.timestamp}
         />

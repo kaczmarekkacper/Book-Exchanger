@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Moment from "moment";
 
@@ -9,55 +9,71 @@ import {
   Image,
   TouchableHighlight,
 } from "react-native";
+import FavouriteIcon from "../FavouriteIcon/FavouriteIcon";
+
+import getDocsId from "../../utils/getDocsId";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../../firebase";
 
 const OfferElement = (props) => {
-  console.log(props);
-  return (
-    <View style={style.container}>
-      <Image
-        style={style.image}
-        source={{
-          uri: props.item.imageUrl,
-          width: 200,
-          height: 300,
-        }}
-      ></Image>
-      <View style={style.textContainer}>
-        <Text style={style.title}>{props.item.title}</Text>
-        <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
-        <View style={style.timestampView}>
-          <Text style={style.timestamp}>
-            {Moment(props.item.timestamp).format("llll")}
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-};
+  const navigation = useNavigation();
+  const [favData, setFavData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
-const ActualOfferElement = (props) => {
-  console.log(props);
+  useEffect(() => {
+    getDocsId(auth.currentUser?.email).then((data) => {
+      setFavData(data);
+    });
+  }, [refresh]);
+
+  console.log(
+    props.item.id +
+      " " +
+      !!favData.filter((data) => data.offerId == props.item.id).length
+  );
   return (
-    <View style={style.container}>
-      <Image
-        style={style.image}
-        source={{
-          uri: props.item.imageUrl,
-          width: 200,
-          height: 300,
-        }}
-      ></Image>
-      <View style={style.textContainer}>
-        <Text style={style.title}>{props.item.title}</Text>
-        <Text style={style.title}>{props.item.author}</Text>
-        <Text style={style.wanted}>{`ISBN: ${props.item.isbn}`}</Text>
-        <View style={style.timestampView}>
-          <Text style={style.timestamp}>
-            {Moment(props.item.timestamp).format("llll")}
-          </Text>
+    <TouchableHighlight
+      onPress={() => {
+        console.log("PRESSED");
+        navigation.navigate("OfferDetailsScreen", {
+          item: props.item,
+        });
+      }}
+    >
+      <View style={style.container}>
+        <Image
+          style={style.image}
+          source={{
+            uri: props.item.imageUrl,
+            width: 200,
+            height: 300,
+          }}
+        ></Image>
+        <View style={style.textContainer}>
+          <Text style={style.title}>{props.item.title}</Text>
+          <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
+          <View style={style.timestampView}>
+            <FavouriteIcon
+              id={props.item.id}
+              inDB={
+                !!favData.filter((data) => data.offerId == props.item.id).length
+              }
+              favId={
+                !!favData.filter((data) => data.offerId == props.item.id).length
+                  ? favData.filter((data) => data.offerId == props.item.id)[0]
+                      .id
+                  : null
+              }
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+            <Text style={style.timestamp}>
+              {Moment(props.item.timestamp).format("llll")}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 
@@ -96,6 +112,9 @@ const style = StyleSheet.create({
     flexDirection: "column",
     width: "80%",
   },
+  button: {
+    backgroundColor: "#3b3b3b",
+  },
 });
 
-export { OfferElement, ActualOfferElement };
+export default OfferElement;

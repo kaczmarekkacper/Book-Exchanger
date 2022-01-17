@@ -1,3 +1,3 @@
-import { OfferElement, ActualOfferElement } from "./OfferElement.js";
+import OfferElement from "./OfferElement.js";
 
-export { OfferElement, ActualOfferElement };
+export default OfferElement;

@@ -1,18 +1,27 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, StatusBar, SafeAreaView } from "react-native";
 
 import ControlBar from "../ControlBar";
 
 const LayoutWithControlBar = (props) => {
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={true}
+        barStyle="dark-content"
+        backgroundColor="#61dafb"
+        hidden={false}
+      />
       {props.children}
       <ControlBar containerStyle={styles.controlBar} />
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   content: {
     flex: 1,
     flexShrink: 1,

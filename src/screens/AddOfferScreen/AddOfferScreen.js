@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import { doc, setDoc, getFirestore, Timestamp } from "firebase/firestore";
 import Icon from "react-native-vector-icons/AntDesign";
 import { auth } from "../../../firebase";
-import database from "firebase/database";
 import uuid from "react-native-uuid";
 
 import UploadPhotoElement from "../../components/UploadPhotoElement";
@@ -68,7 +67,6 @@ const AddOfferScreen = (props) => {
     if (!!barcode) {
       console.log(barcode);
       getBooksFromApi(barcode).then((d) => {
-        console.log(d);
         try {
           setOfferTitle(d["volumeInfo"]["title"]);
         } catch (e) {

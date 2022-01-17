@@ -31,7 +31,7 @@ const OffersScreen = () => {
   const [offers, setOffers] = useState([]);
 
   useEffect(() => {
-    const collectionRef = collection(database, "test_offers");
+    const collectionRef = collection(database, "offers");
     const q = query(collectionRef, orderBy("timestamp", "desc"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {

@@ -7,7 +7,10 @@ const InputWithTitle = (props) => {
       <Text style={style.title}>{props.title}</Text>
       <TextInput
         style={style.input}
-        onChangeText={props.onChangeText}
+        onChangeText={(text) => {
+          console.log(text);
+          props.onChangeText(text);
+        }}
         value={props.value}
         placeholder={props.placeholder}
         // keyboardType={props.keyboardType}

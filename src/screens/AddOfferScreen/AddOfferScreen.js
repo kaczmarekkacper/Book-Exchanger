@@ -7,7 +7,7 @@ import {
   Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
+import { doc, setDoc, getFirestore, Timestamp } from "firebase/firestore";
 import Icon from "react-native-vector-icons/AntDesign";
 import { auth } from "../../../firebase";
 import database from "firebase/database";
@@ -57,6 +57,7 @@ const AddOfferScreen = (props) => {
       location: region,
       isbn: barcode,
       user: auth.currentUser?.email,
+      timestamp: Timestamp.now().toDate(),
     };
     console.log("Offer data: " + JSON.stringify(offerData));
     setDoc(doc(db, "offers", id), offerData);
@@ -83,6 +84,12 @@ const AddOfferScreen = (props) => {
       });
     }
   }, [barcode]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button onPress={uploadOffer} title="Upload" />,
+    });
+  }, [offerTitle, offerAuthors, offerDesc, region, barcode]);
 
   const handleScanner = () => {
     setBarcode("");

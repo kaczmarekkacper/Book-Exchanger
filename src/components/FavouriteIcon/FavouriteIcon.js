@@ -16,28 +16,21 @@ import uuid from "react-native-uuid";
 import { auth } from "../../../firebase";
 
 const FavouriteIcon = (props) => {
-  console.log(props);
   const db = getFirestore();
-
-  // const [inDB, setInDB] = useState(false);
 
   const [id, setId] = useState(!!props.favId ? props.favId : uuid.v1());
 
   const addFav = () => {
-    console.log("adding");
     const offerData = {
       offerId: props.id,
       user: auth.currentUser?.email,
     };
     console.log(offerData);
     setDoc(doc(db, "fav", id), offerData);
-    // setInDB(true);
   };
 
   const removeFav = (fav_id) => {
-    console.log("removing" + fav_id);
     deleteDoc(doc(db, "fav", fav_id));
-    // setInDB(false);
   };
 
   return (

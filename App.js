@@ -10,6 +10,7 @@ import AddOfferScreen from "./src/screens/AddOfferScreen";
 import OfferDetailsScreen from "./src/screens/OfferDetailsScreen";
 import ChatScreen from "./src/screens/ChatScreen/ChatScreen";
 import UserChatsScreen from "./src/screens/UserChatsScreen";
+import FavouriteScreen from "./src/screens/FavouriteScreen";
 
 ///
 import { LogBox } from "react-native";
@@ -40,6 +41,11 @@ const App = () => {
           name="OffersScreen"
           component={OffersScreen}
           options={{ title: "Ogłoszenia" }}
+        />
+        <Stack.Screen
+          name="FavouriteScreen"
+          component={FavouriteScreen}
+          options={{ title: "Ulubione" }}
         />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen

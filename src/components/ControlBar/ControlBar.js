@@ -16,6 +16,9 @@ const ControlBar = (props) => {
   const handleChats = () => {
     navigation.navigate("UserChatsScreen");
   };
+  const handleLoved = () => {
+    navigation.navigate("FavouriteScreen");
+  };
   const handleLogOut = () => {
     auth
       .signOut()
@@ -34,7 +37,7 @@ const ControlBar = (props) => {
       <ControlBarIcon
         title="Loved"
         icon={<Icon name="hearto" color="white" />}
-        onPress={handleSearch}
+        onPress={handleLoved}
       />
       <ControlBarIcon
         title="Add"

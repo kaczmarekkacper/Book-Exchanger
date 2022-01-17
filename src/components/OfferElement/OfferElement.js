@@ -26,11 +26,6 @@ const OfferElement = (props) => {
     });
   }, [refresh]);
 
-  console.log(
-    props.item.id +
-      " " +
-      !!favData.filter((data) => data.offerId == props.item.id).length
-  );
   return (
     <TouchableHighlight
       onPress={() => {

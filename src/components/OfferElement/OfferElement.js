@@ -46,6 +46,7 @@ const OfferElement = (props) => {
         ></Image>
         <View style={style.textContainer}>
           <Text style={style.title}>{props.item.title}</Text>
+          <Text style={style.author}>{props.item.author}</Text>
           <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
           <View style={style.timestampView}>
             <FavouriteIcon
@@ -87,6 +88,9 @@ const style = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+  },
+  author: {
+    fontSize: 10,
   },
   wanted: {
     fontSize: 15,

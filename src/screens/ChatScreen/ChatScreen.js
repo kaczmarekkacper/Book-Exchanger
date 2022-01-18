@@ -4,7 +4,7 @@ import React, {
   useLayoutEffect,
   useCallback,
 } from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import {
   collection,
@@ -42,12 +42,14 @@ const ChatScreen = (props) => {
   const d1 = doc(database, "user_chats", from_user);
   const d2 = doc(database, "user_chats", to_user);
   const da = new Date();
-  setDoc(d1, { [to_user]: da.getTime() }, { merge: true }).then(
-    console.log("Channel created")
-  );
-  setDoc(d2, { [from_user]: da.getTime() }, { merge: true }).then(
-    console.log("Channel created")
-  );
+  const updateTime = () => {
+    setDoc(d1, { [to_user]: da.getTime() }, { merge: true }).then(
+      console.log("Channel created")
+    );
+    setDoc(d2, { [from_user]: da.getTime() }, { merge: true }).then(
+      console.log("Channel created")
+    );
+  };
 
   useEffect(() => {
     //const collectionRef = collection(database, "chats");
@@ -72,6 +74,7 @@ const ChatScreen = (props) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
+    updateTime();
     const { _id, createdAt, text, user } = messages[0];
     //addDoc(collection(database, "chats"), {
     addDoc(roomColRef, {
@@ -84,15 +87,34 @@ const ChatScreen = (props) => {
   }, []);
 
   return (
-    <GiftedChat
-      messages={messages}
-      showAvatarForEveryMessage={true}
-      onSend={(messages) => onSend(messages)}
-      user={{
-        _id: auth?.currentUser?.email,
-        avatar: "https://i.pravatar.cc/300",
-      }}
-    />
+    <View style={style.container}>
+      <Text style={style.text}>{to_user}</Text>
+      <GiftedChat
+        messages={messages}
+        showAvatarForEveryMessage={true}
+        onSend={(messages) => onSend(messages)}
+        user={{
+          _id: auth?.currentUser?.email,
+          avatar: "https://i.pravatar.cc/300",
+        }}
+      />
+    </View>
   );
 };
 export default ChatScreen;
+
+const style = StyleSheet.create({
+  text: {
+    fontSize: 30,
+    alignSelf: "center",
+    backgroundColor: "gray",
+    borderRadius: 8,
+  },
+  searchBar: {
+    width: "100%",
+    height: "10%",
+  },
+  container: {
+    flex: 1,
+  },
+});

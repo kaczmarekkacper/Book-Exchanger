@@ -21,7 +21,7 @@ const OffersScreen = () => {
           title: doc.data().title,
           id: doc.id,
           user: doc.data().user,
-          author: doc.data().author,
+          author: doc.data().authors,
           timestamp: doc.data().timestamp.toDate(),
           imageUrl: doc.data().imageUrl,
         }))

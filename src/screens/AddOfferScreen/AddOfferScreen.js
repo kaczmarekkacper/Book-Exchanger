@@ -113,7 +113,7 @@ const AddOfferScreen = (props) => {
         <>
           <Text style={styles.addOfferText}>Dodawanie ogłoszenia</Text>
           <TouchableOpacity style={styles.button} onPress={handleScanner}>
-            <Icon name="barcode" color="white" />
+            <Icon name="barcode" color="white" style={styles.icon} />
           </TouchableOpacity>
         </>
         <UploadPhotoElement />
@@ -171,13 +171,18 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  icon: {
+    flex: 1,
+    fontSize: 40,
+  },
   button: {
     backgroundColor: "green",
-    width: "10%",
-    padding: 15,
+    width: "50%",
+    padding: 5,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 10,
+    alignSelf: "center",
   },
   buttonText: {
     color: "white",

@@ -19,6 +19,9 @@ const ControlBar = (props) => {
   const handleLoved = () => {
     navigation.navigate("FavouriteScreen");
   };
+  const handleWanted = () => {
+    navigation.navigate("WantedScreen");
+  };
   const handleLogOut = () => {
     auth
       .signOut()
@@ -31,13 +34,18 @@ const ControlBar = (props) => {
     <View style={props.containerStyle}>
       <ControlBarIcon
         title="Search"
-        icon={<Icon name="home" color="white" />}
+        icon={<Icon name="book" color="white" />}
         onPress={handleSearch}
       />
       <ControlBarIcon
         title="Loved"
         icon={<Icon name="hearto" color="white" />}
         onPress={handleLoved}
+      />
+      <ControlBarIcon
+        title="Wanted"
+        icon={<Icon name="pushpin" color="white" />}
+        onPress={handleWanted}
       />
       <ControlBarIcon
         title="Add"

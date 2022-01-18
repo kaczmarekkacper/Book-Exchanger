@@ -11,6 +11,7 @@ import OfferDetailsScreen from "./src/screens/OfferDetailsScreen";
 import ChatScreen from "./src/screens/ChatScreen/ChatScreen";
 import UserChatsScreen from "./src/screens/UserChatsScreen";
 import FavouriteScreen from "./src/screens/FavouriteScreen";
+import WantedScreen from "./src/screens/WantedScreen";
 
 ///
 import { LogBox } from "react-native";
@@ -80,6 +81,11 @@ const App = () => {
           options={{
             title: "Moje Chaty",
           }}
+        />
+        <Stack.Screen
+          name="WantedScreen"
+          component={WantedScreen}
+          options={{ title: "Poszukiwane przeze mnie" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

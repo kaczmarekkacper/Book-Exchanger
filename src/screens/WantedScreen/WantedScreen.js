@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
-import OfferElement from "../../components/OfferElement";
+import WantedElement from "../../components/WantedElement";
 import {
   doc,
   setDoc,
@@ -20,6 +20,7 @@ import {
   query,
   orderBy,
   onSnapshot,
+  where,
 } from "firebase/firestore";
 import { database } from "../../../firebase";
 import getBooksFromApi from "../../utils/getBooksFromApi";
@@ -37,7 +38,11 @@ const WantedScreen = () => {
 
   useEffect(() => {
     const collectionRef = collection(database, "wanted");
-    const q = query(collectionRef, orderBy("timestamp", "desc"));
+    const q = query(
+      collectionRef,
+      orderBy("timestamp", "desc"),
+      where("user", "==", auth.currentUser.email)
+    );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       setWanted(
@@ -61,6 +66,9 @@ const WantedScreen = () => {
   };
 
   const handleAddWanted = () => {
+    if (!wantedTitle) {
+      return;
+    }
     console.log("Uploading");
     const wantedData = {
       title: wantedTitle,
@@ -111,7 +119,7 @@ const WantedScreen = () => {
         <FlatList
           data={wanted}
           renderItem={(props) => {
-            return <OfferElement {...props} />;
+            return <WantedElement {...props} />;
           }}
           keyExtractor={(item) => item.timestamp}
         />

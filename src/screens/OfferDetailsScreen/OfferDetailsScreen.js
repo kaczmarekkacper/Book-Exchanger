@@ -14,15 +14,23 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
-import { database } from "../../../firebase";
+import { auth, database } from "../../../firebase";
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
-import OfferElement from "../../components/OfferElement";
+import WantedElement from "../../components/WantedElement";
 
 const OfferDetailsScreen = (props) => {
   const item = props.route.params.item;
   const navigation = useNavigation();
   const [usersWanted, setUsersWanted] = useState([]);
+  const [actualUsersWanted, setActualUsersWanted] = useState([]);
+  const [myOffers, setMyOffers] = useState([]);
 
+  useEffect(() => {
+    usersWanted.forEach((b) => {
+      b.highlight = !!myOffers.includes(b.isbn);
+    });
+    setActualUsersWanted(usersWanted);
+  }, [usersWanted]);
   useEffect(() => {
     const collectionRef = collection(database, "wanted");
     const q = query(
@@ -36,12 +44,28 @@ const OfferDetailsScreen = (props) => {
         querySnapshot.docs.map((doc) => ({
           title: doc.data().title,
           id: doc.id,
+          isbn: doc.data().isbn,
           user: doc.data().user,
           author: doc.data().authors,
           timestamp: doc.data().timestamp.toDate(),
+          highlight: false,
         }))
       );
-      console.log("Updated");
+      querySnapshot.docs.forEach((d) => console.log(d.data()));
+      console.log("Updated user wanted");
+      console.log(usersWanted);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const collectionRef = collection(database, "offers");
+    const q = query(collectionRef, where("user", "==", auth.currentUser.email));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setMyOffers(querySnapshot.docs.map((doc) => doc.data().isbn));
+      console.log("Updated my offers");
     });
 
     return unsubscribe;
@@ -63,9 +87,9 @@ const OfferDetailsScreen = (props) => {
       <Text>Poszukiwane przez wystawcę:</Text>
       <View style={styles.scrollViewContainter}>
         <FlatList
-          data={usersWanted}
+          data={actualUsersWanted}
           renderItem={(props) => {
-            return <OfferElement {...props} />;
+            return <WantedElement {...props} />;
           }}
           keyExtractor={(item) => item.timestamp}
         />

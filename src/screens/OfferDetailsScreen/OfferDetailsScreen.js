@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  ScrollView,
 } from "react-native";
 import {
   collection,
@@ -17,9 +18,11 @@ import {
 import { auth, database } from "../../../firebase";
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 import WantedElement from "../../components/WantedElement";
+import MapView, { Circle, PROVIDER_GOOGLE } from "react-native-maps";
 
 const OfferDetailsScreen = (props) => {
   const item = props.route.params.item;
+  console.log(item);
   const navigation = useNavigation();
   const [usersWanted, setUsersWanted] = useState([]);
   const [actualUsersWanted, setActualUsersWanted] = useState([]);
@@ -77,23 +80,40 @@ const OfferDetailsScreen = (props) => {
   };
   return (
     <LayoutWithControlBar>
-      <View style={styles.container}>
-        <Text>{`Autor: ${item.author}`}</Text>
-        <Text>{`Tytuł: ${item.title}`}</Text>
-        <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
-          <Text style={styles.buttonText}>Otwórz czat</Text>
-        </TouchableOpacity>
-      </View>
-      <Text>Poszukiwane przez wystawcę:</Text>
-      <View style={styles.scrollViewContainter}>
-        <FlatList
-          data={actualUsersWanted}
-          renderItem={(props) => {
-            return <WantedElement {...props} />;
-          }}
-          keyExtractor={(item) => item.timestamp}
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text>{`Autor: ${item.author}`}</Text>
+          <Text>{`Tytuł: ${item.title}`}</Text>
+          <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
+            <Text style={styles.buttonText}>Otwórz czat</Text>
+          </TouchableOpacity>
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            region={item.location}
+            style={styles.map}
+            showsUserLocation={true}
+          >
+            <Circle
+              center={item.location}
+              radius={900}
+              strokeWidth={1}
+              strokeColor={"#1a66ff"}
+              fillColor={"rgba(230,238,255,0.5)"}
+            />
+          </MapView>
+        </View>
+
+        <Text>Poszukiwane przez wystawcę:</Text>
+        <View style={styles.scrollViewContainter}>
+          <FlatList
+            data={actualUsersWanted}
+            renderItem={(props) => {
+              return <WantedElement {...props} />;
+            }}
+            keyExtractor={(item) => item.timestamp}
+          />
+        </View>
+      </ScrollView>
     </LayoutWithControlBar>
   );
 };
@@ -149,5 +169,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: "70%",
     width: "100%",
+  },
+  map: {
+    width: 200,
+    height: 200,
   },
 });

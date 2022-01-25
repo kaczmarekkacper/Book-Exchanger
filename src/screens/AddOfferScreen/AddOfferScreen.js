@@ -19,16 +19,22 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import getBooksFromApi from "../../utils/getBooksFromApi";
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+
 import * as Location from "expo-location";
 
 const AddOfferScreen = (props) => {
   const db = getFirestore();
+  const storage = getStorage();
   const navigation = useNavigation();
   const [id] = useState(uuid.v1());
   const [offerTitle, setOfferTitle] = useState("");
   const [offerAuthors, setOfferAuthors] = useState("");
   const [offerDesc, setOfferDesc] = useState("");
   const [barcode, setBarcode] = useState("");
+  const [image, setImage] = useState(
+    "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
+  );
   const [region, setRegion] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -44,18 +50,30 @@ const AddOfferScreen = (props) => {
 
   const uploadOffer = () => {
     console.log("Uploading");
+    const imageName = image.substring(image.lastIndexOf("/") + 1);
+    uploadImageToStorage(image, imageName);
     const offerData = {
       title: offerTitle,
       authors: offerAuthors,
       description: offerDesc,
       location: region,
       isbn: barcode,
+      imageRef: imageName,
       user: auth.currentUser?.email,
       timestamp: Timestamp.now().toDate(),
     };
     console.log("Offer data: " + JSON.stringify(offerData));
     setDoc(doc(db, "offers", id), offerData);
     navigation.navigate("OffersScreen");
+  };
+
+  const uploadImageToStorage = async (path, imageName) => {
+    const response = await fetch(path);
+    const file = await response.blob();
+    const reference = ref(storage, imageName); // 2
+    uploadBytes(reference, file).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
   };
 
   useEffect(() => {
@@ -100,7 +118,7 @@ const AddOfferScreen = (props) => {
     navigation.setOptions({
       headerRight: () => <Button onPress={uploadOffer} title="Upload" />,
     });
-  }, [offerTitle, offerAuthors, offerDesc, region, barcode]);
+  }, [offerTitle, offerAuthors, offerDesc, region, barcode, image]);
 
   const handleScanner = () => {
     setBarcode("");
@@ -117,7 +135,7 @@ const AddOfferScreen = (props) => {
             <Text style={[{ fontSize: 15 }]}>Zeskanuj kod</Text>
           </TouchableOpacity>
         </>
-        <UploadPhotoElement />
+        <UploadPhotoElement image={image} setImage={setImage} />
         <InputWithTitle
           title="Tytuł"
           onChangeText={setOfferTitle}

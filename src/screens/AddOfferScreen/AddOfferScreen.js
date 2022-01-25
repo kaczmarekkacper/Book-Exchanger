@@ -50,7 +50,9 @@ const AddOfferScreen = (props) => {
 
   const uploadOffer = () => {
     console.log("Uploading");
+    console.log("name: " + image);
     const imageName = image.substring(image.lastIndexOf("/") + 1);
+    console.log(imageName);
     uploadImageToStorage(image, imageName);
     const offerData = {
       title: offerTitle,

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
+  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,6 +16,8 @@ import {
   orderBy,
   onSnapshot,
   where,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import { auth, database } from "../../../firebase";
 import LayoutWithControlBar from "../../components/LayoutWithControlBar";
@@ -24,6 +27,7 @@ import MapView, { Circle, PROVIDER_GOOGLE } from "react-native-maps";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const OfferDetailsScreen = (props) => {
+  const me = auth.currentUser.email;
   const item = props.route.params.item;
   const storage = getStorage();
   console.log(item);
@@ -44,6 +48,16 @@ const OfferDetailsScreen = (props) => {
           setImageUrl(url);
         })
         .catch((e) => console.log("Errors while downloading => ", e));
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(me);
+    console.log(item.user);
+    if (me === item.user) {
+      navigation.setOptions({
+        headerRight: () => <Button onPress={deleteOffer} title="Usuń" />,
+      });
     }
   }, []);
 
@@ -93,6 +107,11 @@ const OfferDetailsScreen = (props) => {
 
     return unsubscribe;
   }, []);
+
+  const deleteOffer = async () => {
+    await deleteDoc(doc(database, "offers", item.id));
+    navigation.goBack(null);
+  };
 
   const handledOpenChat = () => {
     console.log("Opening chat with user " + item.user);

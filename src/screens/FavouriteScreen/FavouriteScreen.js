@@ -47,12 +47,6 @@ const FavouriteScreen = (props) => {
 
   return (
     <LayoutWithControlBar>
-      {/* <SearchBar
-        containerStyle={style.searchBar}
-        placeholder="Type here"
-        onChangeText={setSearch}
-        value={search}
-      ></SearchBar> */}
       <View style={style.scrollViewContainter}>
         <FlatList
           data={offers.filter((doc) => ids.includes(doc.id))}
@@ -67,10 +61,6 @@ const FavouriteScreen = (props) => {
 };
 
 const style = StyleSheet.create({
-  searchBar: {
-    width: "100%",
-    height: "10%",
-  },
   scrollableContent: {
     width: "100%",
     height: "100%",

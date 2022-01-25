@@ -27,12 +27,10 @@ const OfferElement = (props) => {
     "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
   );
   useEffect(() => {
-    console.log(!!props.item.imageRef);
     if (!!props.item.imageRef) {
       const reference = ref(storage, props.item.imageRef);
       getDownloadURL(reference)
         .then((url) => {
-          console.log(url);
           setImageUrl(url);
         })
         .catch((e) => console.log("Errors while downloading => ", e));

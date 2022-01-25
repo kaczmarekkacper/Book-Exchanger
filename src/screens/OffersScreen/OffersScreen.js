@@ -35,12 +35,6 @@ const OffersScreen = () => {
 
   return (
     <LayoutWithControlBar>
-      {/* <SearchBar
-        containerStyle={style.searchBar}
-        placeholder="Type here"
-        onChangeText={setSearch}
-        value={search}
-      ></SearchBar> */}
       <View style={style.scrollViewContainter}>
         <FlatList
           data={offers}
@@ -55,10 +49,6 @@ const OffersScreen = () => {
 };
 
 const style = StyleSheet.create({
-  searchBar: {
-    width: "100%",
-    height: "10%",
-  },
   scrollableContent: {
     width: "100%",
     height: "100%",

@@ -102,7 +102,7 @@ const OfferDetailsScreen = (props) => {
     <LayoutWithControlBar>
       <ScrollView>
         <Image
-          style={{ width: 200, height: 200 }}
+          style={{ width: 200, height: 150, alignSelf: "center" }}
           source={{
             uri: imageUrl,
             width: 200,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   map: {
-    width: 200,
+    width: 350,
     height: 200,
   },
 });

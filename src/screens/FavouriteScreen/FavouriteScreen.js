@@ -34,7 +34,8 @@ const FavouriteScreen = (props) => {
           user: doc.data().user,
           author: doc.data().author,
           timestamp: doc.data().timestamp.toDate(),
-          imageUrl: doc.data().imageUrl,
+          imageRef: doc.data().imageRef,
+          location: doc.data().location,
         }))
       );
       console.log("Updated");

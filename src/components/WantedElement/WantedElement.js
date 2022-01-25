@@ -20,6 +20,21 @@ const WantedElement = (props) => {
   const [favData, setFavData] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
+  const [imageUrl, setImageUrl] = useState(
+    "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
+  );
+
+  useEffect(() => {
+    if (!!props.item.imageRef) {
+      const reference = ref(storage, props.item.imageRef);
+      getDownloadURL(reference)
+        .then((url) => {
+          setImageUrl(url);
+        })
+        .catch((e) => console.log("Errors while downloading => ", e));
+    }
+  }, []);
+
   useEffect(() => {
     getDocsId(auth.currentUser?.email).then((data) => {
       setFavData(data);
@@ -37,7 +52,7 @@ const WantedElement = (props) => {
         <Image
           style={style.image}
           source={{
-            uri: "https://gowirksworth.com/wp-content/uploads/2017/02/book-question-mark.jpg",
+            uri: imageUrl,
             width: 200,
             height: 300,
           }}

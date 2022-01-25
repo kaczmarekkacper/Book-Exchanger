@@ -15,10 +15,29 @@ import getDocsId from "../../utils/getDocsId";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../../firebase";
 
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 const OfferElement = (props) => {
   const navigation = useNavigation();
+  const storage = getStorage();
   const [favData, setFavData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+
+  const [imageUrl, setImageUrl] = useState(
+    "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
+  );
+  useEffect(() => {
+    console.log(!!props.item.imageRef);
+    if (!!props.item.imageRef) {
+      const reference = ref(storage, props.item.imageRef);
+      getDownloadURL(reference)
+        .then((url) => {
+          console.log(url);
+          setImageUrl(url);
+        })
+        .catch((e) => console.log("Errors while downloading => ", e));
+    }
+  }, []);
 
   useEffect(() => {
     getDocsId(auth.currentUser?.email).then((data) => {
@@ -39,7 +58,7 @@ const OfferElement = (props) => {
         <Image
           style={style.image}
           source={{
-            uri: props.item.imageUrl,
+            uri: imageUrl,
             width: 200,
             height: 300,
           }}

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  Image,
   ScrollView,
 } from "react-native";
 import {
@@ -20,13 +21,31 @@ import LayoutWithControlBar from "../../components/LayoutWithControlBar";
 import WantedElement from "../../components/WantedElement";
 import MapView, { Circle, PROVIDER_GOOGLE } from "react-native-maps";
 
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 const OfferDetailsScreen = (props) => {
   const item = props.route.params.item;
+  const storage = getStorage();
   console.log(item);
   const navigation = useNavigation();
   const [usersWanted, setUsersWanted] = useState([]);
   const [actualUsersWanted, setActualUsersWanted] = useState([]);
   const [myOffers, setMyOffers] = useState([]);
+
+  const [imageUrl, setImageUrl] = useState(
+    "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
+  );
+  useEffect(() => {
+    if (!!item.imageRef) {
+      const reference = ref(storage, item.imageRef);
+      getDownloadURL(reference)
+        .then((url) => {
+          console.log(url);
+          setImageUrl(url);
+        })
+        .catch((e) => console.log("Errors while downloading => ", e));
+    }
+  }, []);
 
   useEffect(() => {
     usersWanted.forEach((b) => {
@@ -50,6 +69,7 @@ const OfferDetailsScreen = (props) => {
           isbn: doc.data().isbn,
           user: doc.data().user,
           author: doc.data().authors,
+          imageRef: doc.data().imageRef,
           timestamp: doc.data().timestamp.toDate(),
           highlight: false,
         }))
@@ -81,6 +101,14 @@ const OfferDetailsScreen = (props) => {
   return (
     <LayoutWithControlBar>
       <ScrollView>
+        <Image
+          style={{ width: 200, height: 200 }}
+          source={{
+            uri: imageUrl,
+            width: 200,
+            height: 200,
+          }}
+        ></Image>
         <View style={styles.container}>
           <Text>{`Autor: ${item.author}`}</Text>
           <Text>{`Tytuł: ${item.title}`}</Text>
@@ -97,8 +125,8 @@ const OfferDetailsScreen = (props) => {
               center={item.location}
               radius={900}
               strokeWidth={1}
-              strokeColor={"#1a66ff"}
-              fillColor={"rgba(230,238,255,0.5)"}
+              strokeColor={"#1E90FF"}
+              fillColor={"rgba(135,206,250,0.5)"}
             />
           </MapView>
         </View>

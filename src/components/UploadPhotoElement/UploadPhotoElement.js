@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Image, View, TouchableOpacity, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const UploadPhotoElement = () => {
-  const [image, setImage] = useState(
-    "https://bibliotekant.pl/wp-content/uploads/2021/04/placeholder-image-768x576.png"
-  );
+const UploadPhotoElement = (props) => {
   const addImage = async () => {
-    let _image = await ImagePicker.launchImageLibraryAsync();
+    let _image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    props.setImage(_image.uri);
   };
 
   return (
@@ -16,8 +19,11 @@ const UploadPhotoElement = () => {
         onPress={addImage}
         style={imageUploaderStyles.uploadBtn}
       >
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        {props.image && (
+          <Image
+            source={{ uri: props.image }}
+            style={{ width: 200, height: 200 }}
+          />
         )}
       </TouchableOpacity>
     </View>

@@ -23,8 +23,8 @@ const OffersScreen = () => {
           user: doc.data().user,
           author: doc.data().authors,
           location: doc.data().location,
+          imageRef: doc.data().imageRef,
           timestamp: doc.data().timestamp.toDate(),
-          imageUrl: doc.data().imageUrl,
         }))
       );
       console.log("Updated");

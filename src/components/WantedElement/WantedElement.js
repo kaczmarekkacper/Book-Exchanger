@@ -45,7 +45,7 @@ const WantedElement = (props) => {
         <View style={style.textContainer}>
           <Text style={style.title}>{props.item.title}</Text>
           <Text style={style.author}>{props.item.author}</Text>
-          <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
+          <Text style={style.wanted}>{`Kat.: ${props.item.wanted}`}</Text>
           <View style={style.timestampView}>
             <Text style={style.timestamp}>
               {Moment(props.item.timestamp).format("llll")}

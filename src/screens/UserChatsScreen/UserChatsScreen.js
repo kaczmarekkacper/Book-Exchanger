@@ -90,7 +90,7 @@ const UserChatsScreen = () => {
                     <Text style={style.title}>{props.item.mail}</Text>
                     <Text
                       style={style.wanted}
-                    >{`For: ${props.item.wanted}`}</Text>
+                    >{`Kat.: ${props.item.wanted}`}</Text>
                     <View style={style.timestampView}>
                       <Text style={style.timestamp}>
                         {Moment(props.item.time).format("llll")}

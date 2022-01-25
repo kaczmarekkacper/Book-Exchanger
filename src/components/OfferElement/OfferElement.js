@@ -47,7 +47,7 @@ const OfferElement = (props) => {
         <View style={style.textContainer}>
           <Text style={style.title}>{props.item.title}</Text>
           <Text style={style.author}>{props.item.author}</Text>
-          <Text style={style.wanted}>{`For: ${props.item.wanted}`}</Text>
+          <Text style={style.wanted}>{`Kat.: ${props.item.wanted}`}</Text>
           <View style={style.timestampView}>
             <FavouriteIcon
               id={props.item.id}

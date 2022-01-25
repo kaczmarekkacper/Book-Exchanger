@@ -33,36 +33,33 @@ const ControlBar = (props) => {
   return (
     <View style={props.containerStyle}>
       <ControlBarIcon
-        title="Search"
+        title="Szukaj"
         icon={<Icon name="book" color="white" />}
         onPress={handleSearch}
       />
       <ControlBarIcon
-        title="Loved"
+        title="Ulubione"
         icon={<Icon name="hearto" color="white" />}
         onPress={handleLoved}
       />
       <ControlBarIcon
-        title="Wanted"
+        title="Poszukiwane"
         icon={<Icon name="pushpin" color="white" />}
         onPress={handleWanted}
       />
       <ControlBarIcon
-        title="New Offer"
+        title="Dodaj"
         icon={<Icon name="pluscircleo" color="white" />}
         onPress={handleAddOffer}
       />
       <ControlBarIcon
-        title="Chats"
+        title="Wiadomości"
         icon={<Icon name="message1" color="white" />}
         onPress={handleChats}
       />
+      <ControlBarIcon title="Konto" icon={<Icon name="team" color="white" />} />
       <ControlBarIcon
-        title="Account"
-        icon={<Icon name="team" color="white" />}
-      />
-      <ControlBarIcon
-        title="Logout"
+        title="Wyloguj"
         icon={<Icon name="logout" color="white" />}
         onPress={handleLogOut}
       />

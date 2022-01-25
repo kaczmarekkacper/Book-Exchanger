@@ -45,12 +45,12 @@ const FavouriteScreen = (props) => {
 
   return (
     <LayoutWithControlBar>
-      <SearchBar
+      {/* <SearchBar
         containerStyle={style.searchBar}
         placeholder="Type here"
         onChangeText={setSearch}
         value={search}
-      ></SearchBar>
+      ></SearchBar> */}
       <View style={style.scrollViewContainter}>
         <FlatList
           data={offers.filter((doc) => ids.includes(doc.id))}
@@ -76,7 +76,7 @@ const style = StyleSheet.create({
   },
   scrollViewContainter: {
     flexDirection: "column",
-    height: "85%",
+    height: "95%",
     width: "100%",
   },
   container: {

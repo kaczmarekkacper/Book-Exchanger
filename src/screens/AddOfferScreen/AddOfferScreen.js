@@ -116,7 +116,7 @@ const AddOfferScreen = (props) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button onPress={uploadOffer} title="Upload" />,
+      headerRight: () => <Button onPress={uploadOffer} title="Opublikuj" />,
     });
   }, [offerTitle, offerAuthors, offerDesc, region, barcode, image]);
 

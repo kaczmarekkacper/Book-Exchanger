@@ -14,9 +14,9 @@ const FavouriteScreen = (props) => {
   const [offers, setOffers] = useState([]);
   const [ids, setIds] = useState([]);
 
-  useEffect(() => {
+  useEffect(async () => {
     const idsArray = [];
-    getDocsId(auth.currentUser?.email).then((data) => {
+    await getDocsId(auth.currentUser?.email).then((data) => {
       data.forEach((doc) => idsArray.push(doc.offerId));
     });
     setIds(idsArray);

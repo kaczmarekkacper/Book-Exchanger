@@ -26,11 +26,12 @@ const UploadPhotoElement = () => {
 
 const imageUploaderStyles = StyleSheet.create({
   container: {
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
     backgroundColor: "#efefef",
     position: "relative",
     overflow: "hidden",
+    alignSelf: "center",
   },
   uploadBtnContainer: {
     opacity: 0.7,

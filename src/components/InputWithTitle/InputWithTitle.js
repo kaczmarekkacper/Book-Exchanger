@@ -25,7 +25,8 @@ const style = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 15,
+    fontSize: 20,
+    alignSelf: "center",
   },
   input: {
     backgroundColor: "grey",

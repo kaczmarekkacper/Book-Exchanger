@@ -48,7 +48,7 @@ const ControlBar = (props) => {
         onPress={handleWanted}
       />
       <ControlBarIcon
-        title="Add"
+        title="New Offer"
         icon={<Icon name="pluscircleo" color="white" />}
         onPress={handleAddOffer}
       />

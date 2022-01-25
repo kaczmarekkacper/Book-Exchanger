@@ -114,6 +114,7 @@ const AddOfferScreen = (props) => {
           <Text style={styles.addOfferText}>Dodawanie ogłoszenia</Text>
           <TouchableOpacity style={styles.button} onPress={handleScanner}>
             <Icon name="barcode" color="white" style={styles.icon} />
+            <Text style={[{ fontSize: 15 }]}>Zeskanuj kod</Text>
           </TouchableOpacity>
         </>
         <UploadPhotoElement />
@@ -149,7 +150,7 @@ const AddOfferScreen = (props) => {
           keyboardType="text"
           multiline={false}
         />
-        <Text style={styles.addOfferText}>Lokalizacja</Text>
+        <Text style={[{ fontSize: 15, alignSelf: "center" }]}>Lokalizacja</Text>
         <MapView
           provider={PROVIDER_GOOGLE}
           region={region}
@@ -165,11 +166,12 @@ const AddOfferScreen = (props) => {
 
 const styles = StyleSheet.create({
   addOfferText: {
-    fontSize: 30,
+    fontSize: 20,
   },
   map: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
+    alignSelf: "center",
   },
   icon: {
     flex: 1,

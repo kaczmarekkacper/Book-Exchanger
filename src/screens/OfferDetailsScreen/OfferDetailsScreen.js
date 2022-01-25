@@ -82,11 +82,9 @@ const OfferDetailsScreen = (props) => {
     <LayoutWithControlBar>
       <ScrollView>
         <View style={styles.container}>
-          <Text>{`Autor: ${item.author}`}</Text>
-          <Text>{`Tytuł: ${item.title}`}</Text>
-          <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
-            <Text style={styles.buttonText}>Otwórz czat</Text>
-          </TouchableOpacity>
+          <Text style={styles.textdetail}>{`Autor: ${item.author}`}</Text>
+          <Text style={styles.textdetail}>{`Tytuł: ${item.title}`}</Text>
+          <Text style={styles.textdetail}>{`Użytkownik: ${item.user}`}</Text>
           <MapView
             provider={PROVIDER_GOOGLE}
             region={item.location}
@@ -102,8 +100,11 @@ const OfferDetailsScreen = (props) => {
             />
           </MapView>
         </View>
+        <TouchableOpacity style={styles.button} onPress={handledOpenChat}>
+          <Text style={styles.buttonText}>Otwórz czat z wystawcą</Text>
+        </TouchableOpacity>
 
-        <Text>Poszukiwane przez wystawcę:</Text>
+        <Text style={styles.textdetail}>Poszukiwane przez wystawcę:</Text>
         <View style={styles.scrollViewContainter}>
           <FlatList
             data={actualUsersWanted}
@@ -125,6 +126,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  textdetail: {
+    fontSize: 20,
+    alignSelf: "stretch",
+    backgroundColor: "gray",
+    borderRadius: 8,
+    marginTop: 3,
   },
   inputContainer: {
     width: "80%",

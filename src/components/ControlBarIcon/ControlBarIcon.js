@@ -20,6 +20,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     flexShrink: 1,
+    height: 70,
   },
   button: {
     backgroundColor: "#3b3b3b",

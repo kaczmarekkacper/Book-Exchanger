@@ -104,13 +104,14 @@ const WantedScreen = () => {
   return (
     <LayoutWithControlBar>
       <>
-        <Text style={style.text}>Dodawaj poszukiwaną pozycję</Text>
-        <TouchableOpacity style={style.button} onPress={handleScanner}>
+        <Text style={style.textdetail}>Dodawaj poszukiwaną pozycję</Text>
+        <TouchableOpacity style={style.scannerButton} onPress={handleScanner}>
           <Icon name="barcode" color="white" style={style.icon} />
+          <Text style={[{ fontSize: 15 }]}>Zeskanuj kod</Text>
         </TouchableOpacity>
-        <Text style={style.text}>{"ISBN: " + barcode}</Text>
-        <Text style={style.text}>{"Tytuł: " + wantedTitle}</Text>
-        <Text style={style.text}>{"Autorzy: " + wantedAuthors}</Text>
+        <Text style={style.textdetail}>{"ISBN: " + barcode}</Text>
+        <Text style={style.textdetail}>{"Tytuł: " + wantedTitle}</Text>
+        <Text style={style.textdetail}>{"Autorzy: " + wantedAuthors}</Text>
         <TouchableOpacity style={style.button} onPress={handleAddWanted}>
           <Text>DODAJ</Text>
         </TouchableOpacity>
@@ -140,11 +141,10 @@ const style = StyleSheet.create({
   },
   scrollViewContainter: {
     flexDirection: "column",
-    height: "85%",
+    height: "60%",
     width: "100%",
   },
   icon: {
-    flex: 1,
     fontSize: 40,
   },
   container: {
@@ -153,6 +153,13 @@ const style = StyleSheet.create({
     height: "60%",
     flexDirection: "row",
     backgroundColor: "lightgrey",
+  },
+  textdetail: {
+    fontSize: 20,
+    alignSelf: "stretch",
+    backgroundColor: "gray",
+    borderRadius: 8,
+    marginTop: 3,
   },
   image: {
     flex: 1,
@@ -187,12 +194,22 @@ const style = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    alignSelf: "center",
     marginTop: 40,
   },
   buttonText: {
     color: "white",
     fontWeight: "700",
     fontSize: 15,
+  },
+  scannerButton: {
+    backgroundColor: "green",
+    width: "50%",
+    padding: 5,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+    alignSelf: "center",
   },
 });
 

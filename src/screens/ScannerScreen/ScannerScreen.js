@@ -43,17 +43,19 @@ const ScannerScreen = (props) => {
         type={Camera.Constants.Type.back}
         onBarCodeScanned={scanned ? undefined : handledBarCodeScanned}
       ></Camera>
-      <Text style={styles.scannedText}>{scanned ? text : "Scanning"}</Text>
+      <Text style={styles.scannedText}>
+        {scanned ? "ISBN: " + text : "Skanowanie"}
+      </Text>
       {scanned && (
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => setScanned(false)}
           >
-            <Text style={styles.buttonText}>Rescan</Text>
+            <Text style={styles.buttonText}>Skanuj ponownie</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={returnData}>
-            <Text style={styles.buttonText}>Return data</Text>
+            <Text style={styles.buttonText}>Zatwierdź</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 0,
     width: "60%",
     height: "40%",
+    alignSelf: "center",
   },
   button: {
     backgroundColor: "green",

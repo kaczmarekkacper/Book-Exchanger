@@ -33,6 +33,7 @@ const FavouriteScreen = (props) => {
           id: doc.id,
           user: doc.data().user,
           author: doc.data().author,
+          imageRef: doc.data().imageRef,
           timestamp: doc.data().timestamp.toDate(),
           imageRef: doc.data().imageRef,
           location: doc.data().location,
